@@ -1,26 +1,21 @@
 const WebSocket = require('ws');
 
-function onError(ws, err) {
-    console.error(`onError: ${err.message}`);
-}
-
-function onMessage(ws, data) {
-    console.log(`onMessage: ${data}`);
-    ws.send(`recebido: "${data}"`);
-}
-
-function onConnection(ws, req) {
-    ws.on('message', data => onMessage(ws, data));
-    ws.on('error', error => onError(ws, error));
-    console.log(`onConnection`);
-}
-
 module.exports = (server) => {
     const wss = new WebSocket.Server({
         server
     });
 
-    wss.on('connection', onConnection);
+    wss.on('connection', (ws, req)=>{
+        ws.on('message', data=>{
+            // ws.send(`recebido: "${data}"`);
+            wss.clients.forEach(function(client) {
+                client.send(data.toString());
+             });
+        });
+        ws.on('error', error=>{
+            console.log(`error: ${error}`);
+        });
+    });
 
     console.log(`App Web Socket Rodando!`);
     return wss;
