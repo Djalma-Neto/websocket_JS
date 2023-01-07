@@ -1,7 +1,7 @@
 <?php
 
 namespace WebSocket;
-require '../vendor/autoload.php';
+require './vendor/autoload.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
