@@ -12,7 +12,7 @@
 <script>
     let input = document.getElementById('input');
     let response = document.getElementById('response');
-    const socket = new WebSocket('ws://localhost:8000');
+    const socket = new WebSocket('ws://http://lamparinasws.herokuapp.com:8000');
 
     // Ao estabelecer a conexão enviamos uma mensagem pro servidor
     socket.addEventListener('open', function () {
