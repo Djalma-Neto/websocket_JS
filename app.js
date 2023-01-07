@@ -18,5 +18,9 @@ app.use(morgan('dev'));
 // app.post('/login', (req, res, next) => {
 //     res.json({ token: '123456' });
 // });
+
+app.get('/', (req, res, next) => {
+    res.json({ status: 'Funcionando' });
+});
  
 module.exports = app;
