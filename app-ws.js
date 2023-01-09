@@ -10,16 +10,25 @@ module.exports = (server) => {
     const wss = new WebSocket.Server({
         server
     });
-
     wss.on('connection', (ws, req)=>{
         ws.id = getId();
         ws.on('message', data=>{
-            // ws.send(`recebido: "${data}"`);
-            wss.clients.forEach(function(client) {
-                if(client.id != ws.id){
-                    client.send(data.toString());
-                }
-             });
+            let menssage = JSON.parse(data)
+
+            if(menssage.type == 'SETPARAMETERS'){
+                wss.clients.forEach(function(client) {
+                    if(client.id == ws.id){
+                        ws.empresa = menssage.empresa;
+                        ws.unidade = menssage.unidade;
+                    }
+                 });
+            }else{
+                wss.clients.forEach(function(client) {
+                    if(client.id != ws.id && client.unidade == ws.unidade){
+                        client.send(JSON.stringify(menssage));
+                    }
+                 });
+            }
         });
         ws.on('error', error=>{
             console.log(`error: ${error}`);

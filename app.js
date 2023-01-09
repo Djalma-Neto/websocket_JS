@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const path = require('path');
  
 const app = express();
-// var allowlist = ['http://example1.com', 'http://example2.com'];
+var allowlist = ['http://example1.com', 'http://example2.com'];
  
 app.use(cors({ origin: '*' }));
  
