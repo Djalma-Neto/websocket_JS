@@ -13,7 +13,16 @@ module.exports = (server) => {
     wss.on('connection', (ws, req)=>{
         ws.id = getId();
         ws.on('message', data=>{
-            let menssage = JSON.parse(data)
+            let menssage = {
+                type: '',
+                menssage: ''
+            }
+            try{
+                menssage = JSON.parse(data)
+            }catch(e){
+                menssage.type = 'undefined'
+                menssage.menssage = data
+            }
 
             if(menssage.type == 'SETPARAMETERS'){
                 wss.clients.forEach(function(client) {
